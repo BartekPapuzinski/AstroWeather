@@ -44,6 +44,7 @@ public class Sun extends Fragment {
         swit = view.findViewById(R.id.swit);
 
 
+
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy HH mm ss");
         String[] currentDate = simpleDateFormat.format(date).split(" ");
