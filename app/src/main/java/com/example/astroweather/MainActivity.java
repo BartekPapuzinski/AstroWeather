@@ -7,15 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     // For this example, only two pages
     static final int NUM_ITEMS = 2;
 
+    TextView timer;
     ViewPager mPager;
     SlidePagerAdapter mPagerAdapter;
 
@@ -25,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        timer = findViewById(R.id.timer);
         /* Instantiate a ViewPager and a PagerAdapter. */
         mPager = (ViewPager) findViewById(R.id.ViewPager);
         mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-
+        clock();
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,21 +58,48 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog);
 
-        final EditText longitude =dialog.findViewById(R.id.longitude);
-        final EditText latitude =dialog.findViewById(R.id.latitude);
+        final EditText longitude = dialog.findViewById(R.id.longitude);
+        final EditText latitude = dialog.findViewById(R.id.latitude);
         Button enter = dialog.findViewById(R.id.enter);
 
         enter.setOnClickListener(new View.OnClickListener() {
 
             @Override public void onClick(View v) {
-                if(longitude.getText() !=null && latitude!=null){
-                    Config.latitude=Double.valueOf(latitude.getText().toString());
-                    Config.longitude=Double.valueOf(longitude.getText().toString());
-                    Toast.makeText(getApplicationContext(), Config.latitude+" "+Config.longitude, Toast.LENGTH_SHORT).show();
+                if (longitude.getText() != null && latitude != null) {
+                    Config.latitude = Double.valueOf(latitude.getText().toString());
+                    Config.longitude = Double.valueOf(longitude.getText().toString());
+                    Toast.makeText(getApplicationContext(), Config.latitude + " " + Config.longitude, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
             }
         });
         dialog.show();
+    }
+
+    public void clock() {
+        new Thread(new Runnable() {
+
+            public void run() {
+
+                while (true) {
+
+                    final Date date = new Date();
+                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+                    runOnUiThread(new Runnable() {
+
+                        @Override public void run() {
+                            timer.setText(String.valueOf(simpleDateFormat.format(date)));
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }).start();
     }
 }

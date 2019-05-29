@@ -8,10 +8,10 @@
     <TextView
             android:gravity="center_horizontal"
             android:id="@+id/tvDialogTitle"
-            android:text="dialogTitle"
+            android:text="Ustawienia"
             android:textSize="10pt"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent" />
+            android:layout_width="fill_parent"/>
     <TextView
             android:text="Długość"
             android:layout_width="match_parent"
