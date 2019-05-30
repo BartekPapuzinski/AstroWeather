@@ -82,11 +82,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         enter.setOnClickListener(new View.OnClickListener() {
 
             @Override public void onClick(View v) {
-                if (longitude.getText() != null && latitude != null) {
-                    Config.latitude = Double.valueOf(latitude.getText().toString());
-                    Config.longitude = Double.valueOf(longitude.getText().toString());
-                    Toast.makeText(getApplicationContext(), Config.latitude + " " + Config.longitude, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                try {
+                    if (Double.valueOf( longitude.getText().toString()) >-180 &&Double.valueOf( longitude.getText().toString()) <180 && Double.valueOf( latitude.getText().toString()) >-90 && Double.valueOf( latitude.getText().toString()) <90) {
+                        Config.latitude = Double.valueOf(latitude.getText().toString());
+                        Config.longitude = Double.valueOf(longitude.getText().toString());
+                        Toast.makeText(getApplicationContext(), Config.latitude + " " + Config.longitude, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }catch (Exception e){
+                    //ignore--
                 }
             }
         });
