@@ -12,7 +12,7 @@ import android.widget.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // For this example, only two pages
     static final int NUM_ITEMS = 2;
@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
         final EditText longitude = dialog.findViewById(R.id.longitude);
         final EditText latitude = dialog.findViewById(R.id.latitude);
         Button enter = dialog.findViewById(R.id.enter);
-
+        Spinner spiner = dialog.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.spiner,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiner.setAdapter(adapter);
+        spiner.setOnItemSelectedListener(this);
         enter.setOnClickListener(new View.OnClickListener() {
 
             @Override public void onClick(View v) {
@@ -101,5 +105,34 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch(position){
+            case 0:
+                Config.updateiterator=15;
+                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Config.updateiterator=30;
+                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Config.updateiterator=45;
+                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                Config.updateiterator=60;
+                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                break;
+            case 4:
+                Config.updateiterator=90;
+                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

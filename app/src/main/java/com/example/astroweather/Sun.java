@@ -1,5 +1,6 @@
 package com.example.astroweather;
 
+import android.widget.Toast;
 import com.astrocalculator.AstroCalculator;
 
 
@@ -57,7 +58,7 @@ public class Sun extends Fragment {
         astroDateTime.setHour(Integer.valueOf(currentDate[3]));
         astroDateTime.setMinute(Integer.valueOf(currentDate[4]));
         astroDateTime.setSecond(Integer.valueOf(currentDate[5]));
-        location = new AstroCalculator.Location(51.75,19.49);
+        location = new AstroCalculator.Location(Config.latitude,Config.longitude);
         astroCalculator = new AstroCalculator(astroDateTime,location);
 
     }
@@ -82,9 +83,37 @@ public class Sun extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sun, container, false);
-        setup();
-        update();
+        go();
         return view;
     }
 
+    public void go(){
+        new Thread(new Runnable() {
+
+            public void run() {
+                int upiterator=Config.updateiterator;
+                while (true) {
+                    if(Config.updateiterator<upiterator) {
+                        upiterator=1;
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override public void run() {
+                                setup();
+                                update();
+                                Toast.makeText(getContext(),"ref",Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    upiterator++;
+                }
+            }
+        }).start();
+
+    }
 }
