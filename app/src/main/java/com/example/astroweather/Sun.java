@@ -20,7 +20,7 @@ import java.util.Date;
  */
 public class Sun extends Fragment {
 
-
+    boolean loop=true;
     View view;
     TextView wschod = null;
     TextView azymutW =null;
@@ -43,9 +43,9 @@ public class Sun extends Fragment {
         azymutz = view.findViewById(R.id.azymutZ);
         zmierzch = view.findViewById(R.id.zmierzch);
         swit = view.findViewById(R.id.swit);
+    }
 
-
-
+    public void update(){
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy HH mm ss");
         String[] currentDate = simpleDateFormat.format(date).split(" ");
@@ -60,10 +60,6 @@ public class Sun extends Fragment {
         astroDateTime.setSecond(Integer.valueOf(currentDate[5]));
         location = new AstroCalculator.Location(Config.latitude,Config.longitude);
         astroCalculator = new AstroCalculator(astroDateTime,location);
-
-    }
-
-    public void update(){
         String[] temp;
         temp= astroCalculator.getSunInfo().getSunrise().toString().split(" ");
         wschod.setText(temp[1]);
@@ -83,8 +79,21 @@ public class Sun extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sun, container, false);
+        setup();
         go();
         return view;
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        loop=false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loop=true;
+        go();
     }
 
     public void go(){
@@ -92,13 +101,12 @@ public class Sun extends Fragment {
 
             public void run() {
                 int upiterator=Config.updateiterator;
-                while (true) {
+                while (loop) {
                     if(Config.updateiterator<upiterator) {
                         upiterator=1;
                         getActivity().runOnUiThread(new Runnable() {
 
                             @Override public void run() {
-                                setup();
                                 update();
                                 Toast.makeText(getContext(),"ref",Toast.LENGTH_SHORT).show();
 

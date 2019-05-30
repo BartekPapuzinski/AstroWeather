@@ -1,6 +1,5 @@
 package com.example.astroweather;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,20 +18,22 @@ import java.util.Date;
  */
 public class Moon extends Fragment {
 
+    boolean loop = true;
     View view;
     TextView wschod = null;
-    TextView zachod =null;
+    TextView zachod = null;
     TextView now = null;
     TextView pelnia = null;
     TextView faza = null;
-    TextView dzien =null;
+    TextView dzien = null;
     AstroCalculator astroCalculator;
     AstroCalculator.Location location;
 
     public Moon() {
         // Required empty public constructor
     }
-    public void setup(){
+
+    public void setup() {
 
         wschod = view.findViewById(R.id.wschod);
         zachod = view.findViewById(R.id.zachod);
@@ -40,9 +41,9 @@ public class Moon extends Fragment {
         pelnia = view.findViewById(R.id.pelnia);
         faza = view.findViewById(R.id.faza);
         dzien = view.findViewById(R.id.dzien);
+    }
 
-
-
+    public void update() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy HH mm ss");
         String[] currentDate = simpleDateFormat.format(date).split(" ");
@@ -55,50 +56,58 @@ public class Moon extends Fragment {
         astroDateTime.setHour(Integer.valueOf(currentDate[3]));
         astroDateTime.setMinute(Integer.valueOf(currentDate[4]));
         astroDateTime.setSecond(Integer.valueOf(currentDate[5]));
-        location = new AstroCalculator.Location(Config.latitude,Config.longitude);
-        astroCalculator = new AstroCalculator(astroDateTime,location);
-
-    }
-
-    public void update(){
+        location = new AstroCalculator.Location(Config.latitude, Config.longitude);
+        astroCalculator = new AstroCalculator(astroDateTime, location);
         String[] temp;
-        temp= astroCalculator.getMoonInfo().getMoonrise().toString().split(" ");
+        temp = astroCalculator.getMoonInfo().getMoonrise().toString().split(" ");
         wschod.setText(temp[1]);
-        temp= astroCalculator.getMoonInfo().getMoonset().toString().split(" ");
+        temp = astroCalculator.getMoonInfo().getMoonset().toString().split(" ");
         zachod.setText(temp[1]);
-        temp= astroCalculator.getMoonInfo().getNextNewMoon().toString().split(" ");
+        temp = astroCalculator.getMoonInfo().getNextNewMoon().toString().split(" ");
         now.setText(temp[0]);
-        temp= astroCalculator.getMoonInfo().getNextFullMoon().toString().split(" ");
+        temp = astroCalculator.getMoonInfo().getNextFullMoon().toString().split(" ");
         pelnia.setText(temp[0]);
-        double temp1= astroCalculator.getMoonInfo().getIllumination();
-        faza.setText(String.valueOf(temp1).substring(0,6));
-        double temp2= astroCalculator.getMoonInfo().getAge();
-        dzien.setText(String.valueOf(temp2).substring(0,6));
+        double temp1 = astroCalculator.getMoonInfo().getIllumination();
+        faza.setText(String.valueOf(temp1).substring(0, 6));
+        double temp2 = astroCalculator.getMoonInfo().getAge();
+        dzien.setText(String.valueOf(temp2).substring(0, 6));
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_moon, container, false);
+        setup();
         go();
         return view;
     }
+    @Override
+    public void onStop() {
+        super.onStop();
+        loop=false;
+    }
 
-    public void go(){
+    @Override
+    public void onResume() {
+        super.onResume();
+        loop=true;
+        go();
+    }
+
+
+    public void go() {
         new Thread(new Runnable() {
 
             public void run() {
-                int upiterator=Config.updateiterator;
-                while (true) {
-                    if(Config.updateiterator<upiterator) {
-                        upiterator=1;
+                int upiterator = Config.updateiterator;
+                while (loop) {
+                    if (Config.updateiterator < upiterator) {
+                        upiterator = 1;
                         getActivity().runOnUiThread(new Runnable() {
 
                             @Override public void run() {
-                                setup();
                                 update();
-                                Toast.makeText(getContext(),"ref",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "ref", Toast.LENGTH_SHORT).show();
 
                             }
                         });

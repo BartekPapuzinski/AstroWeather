@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     // For this example, only two pages
     static final int NUM_ITEMS = 2;
 
+    boolean loop=true;
     TextView timer;
     ViewPager mPager;
     SlidePagerAdapter mPagerAdapter;
@@ -32,6 +33,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mPager = (ViewPager) findViewById(R.id.ViewPager);
         mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        clock();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        loop=false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loop=true;
         clock();
     }
 
@@ -85,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             public void run() {
 
-                while (true) {
+                while (loop) {
 
                     final Date date = new Date();
                     final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
