@@ -8,7 +8,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -28,9 +28,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/wschod" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.462" app:layout_constraintVertical_bias="0.116"/>
+            app:layout_constraintHorizontal_bias="0.954" app:layout_constraintVertical_bias="0.115"/>
     <TextView
-            android:gravity="center"
             android:layout_width="350dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -50,9 +49,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/dzientx" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.488" app:layout_constraintVertical_bias="0.927"/>
+            app:layout_constraintHorizontal_bias="0.021" app:layout_constraintVertical_bias="0.909"/>
     <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -72,9 +71,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/dzien" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.462" app:layout_constraintVertical_bias="0.871"/>
+            app:layout_constraintHorizontal_bias="0.954" app:layout_constraintVertical_bias="0.909"/>
     <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -94,9 +93,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/faza" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.462" app:layout_constraintVertical_bias="0.724"/>
+            app:layout_constraintHorizontal_bias="0.954" app:layout_constraintVertical_bias="0.752"/>
     <TextView
-            android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -116,9 +114,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/pelniatx" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.466" app:layout_constraintVertical_bias="0.635"/>
+            app:layout_constraintHorizontal_bias="0.017" app:layout_constraintVertical_bias="0.583"/>
     <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -138,9 +136,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/pelnia" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.464" app:layout_constraintVertical_bias="0.578"/>
+            app:layout_constraintHorizontal_bias="0.954" app:layout_constraintVertical_bias="0.583"/>
     <TextView
-            android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -160,9 +157,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/fazatx" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.462" app:layout_constraintVertical_bias="0.785"/>
+            app:layout_constraintHorizontal_bias="0.017" app:layout_constraintVertical_bias="0.747"/>
     <TextView
-            android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -182,9 +178,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/nowtx" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.462" app:layout_constraintVertical_bias="0.484"/>
+            app:layout_constraintHorizontal_bias="0.017" app:layout_constraintVertical_bias="0.427"/>
     <TextView
-            android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -204,9 +199,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/zachodtx" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.468" app:layout_constraintVertical_bias="0.337"/>
+            app:layout_constraintHorizontal_bias="0.017" app:layout_constraintVertical_bias="0.276"/>
     <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -226,9 +221,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/zachod" android:textSize="24sp"
-            app:layout_constraintHorizontal_bias="0.475" app:layout_constraintVertical_bias="0.274"/>
+            app:layout_constraintHorizontal_bias="0.954" app:layout_constraintVertical_bias="0.276"/>
     <TextView
-            android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
@@ -248,16 +242,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/wschodtx" android:textSize="24sp"
-            app:layout_constraintVertical_bias="0.181" app:layout_constraintHorizontal_bias="0.462"/>
+            app:layout_constraintVertical_bias="0.115" app:layout_constraintHorizontal_bias="0.017"/>
     <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:text="TextView"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:id="@+id/now" android:textSize="24sp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.462"
-            app:layout_constraintVertical_bias="0.423"/>
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintVertical_bias="0.427"/>
 
 </android.support.constraint.ConstraintLayout>

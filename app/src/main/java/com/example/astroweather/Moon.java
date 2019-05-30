@@ -67,9 +67,9 @@ public class Moon extends Fragment {
         temp= astroCalculator.getMoonInfo().getMoonset().toString().split(" ");
         zachod.setText(temp[1]);
         temp= astroCalculator.getMoonInfo().getNextNewMoon().toString().split(" ");
-        now.setText(temp[1]);
+        now.setText(temp[0]);
         temp= astroCalculator.getMoonInfo().getNextFullMoon().toString().split(" ");
-        pelnia.setText(temp[1]);
+        pelnia.setText(temp[0]);
         double temp1= astroCalculator.getMoonInfo().getIllumination();
         faza.setText(String.valueOf(temp1).substring(0,6));
         double temp2= astroCalculator.getMoonInfo().getAge();
