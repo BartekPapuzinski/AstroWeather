@@ -65,12 +65,20 @@ public class Moon extends Fragment {
         zachod.setText(temp[1]);
         temp = astroCalculator.getMoonInfo().getNextNewMoon().toString().split(" ");
         now.setText(temp[0]);
+        double temporary=Double.valueOf(currentDate[0])-Double.valueOf(temp[0].substring(0,2))-2;
         temp = astroCalculator.getMoonInfo().getNextFullMoon().toString().split(" ");
         pelnia.setText(temp[0]);
         double temp1 = astroCalculator.getMoonInfo().getIllumination();
         faza.setText(String.valueOf(temp1).substring(0, 6));
-        double temp2 = astroCalculator.getMoonInfo().getAge();
-        dzien.setText(String.valueOf(temp2).substring(0, 6));
+
+        if (temporary<0){
+            temporary+=29.531;
+            dzien.setText(String.valueOf(temporary));
+        }
+        else{
+
+            dzien.setText(String.valueOf(temporary));
+        }
 
     }
 
@@ -99,7 +107,7 @@ public class Moon extends Fragment {
         new Thread(new Runnable() {
 
             public void run() {
-                int upiterator = Config.updateiterator;
+                int upiterator = Config.updateiterator+1;
                 while (loop) {
                     if (Config.updateiterator < upiterator) {
                         upiterator = 1;
@@ -107,7 +115,7 @@ public class Moon extends Fragment {
 
                             @Override public void run() {
                                 update();
-                                Toast.makeText(getContext(), "ref", Toast.LENGTH_SHORT).show();
+
 
                             }
                         });

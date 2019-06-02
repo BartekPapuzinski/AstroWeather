@@ -1,11 +1,14 @@
 package com.example.astroweather;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     // For this example, only two pages
     static final int NUM_ITEMS = 2;
+    private static final int TABLET_DP = 600;
 
     boolean loop=true;
     TextView timer;
@@ -30,10 +34,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setSupportActionBar(toolbar);
         timer = findViewById(R.id.timer);
         /* Instantiate a ViewPager and a PagerAdapter. */
-        mPager = (ViewPager) findViewById(R.id.ViewPager);
-        mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        clock();
+
+        if(isTablet(this))
+        {
+
+        }
+        else {
+            mPager = (ViewPager) findViewById(R.id.ViewPager);
+            mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager());
+            mPager.setAdapter(mPagerAdapter);
+            clock();
+        }
     }
     @Override
     public void onStop() {
@@ -86,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     if (Double.valueOf( longitude.getText().toString()) >-180 &&Double.valueOf( longitude.getText().toString()) <180 && Double.valueOf( latitude.getText().toString()) >-90 && Double.valueOf( latitude.getText().toString()) <90) {
                         Config.latitude = Double.valueOf(latitude.getText().toString());
                         Config.longitude = Double.valueOf(longitude.getText().toString());
-                        Toast.makeText(getApplicationContext(), Config.latitude + " " + Config.longitude, Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }catch (Exception e){
@@ -128,28 +138,38 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch(position){
             case 0:
                 Config.updateiterator=15;
-                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 Config.updateiterator=30;
-                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 Config.updateiterator=45;
-                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 Config.updateiterator=60;
-                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
                 break;
             case 4:
                 Config.updateiterator=90;
-                Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
+               // Toast.makeText(parent.getContext(),String.valueOf(Config.updateiterator),Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
     @Override public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public static boolean isTablet(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        float density  = context.getResources().getDisplayMetrics().density;
+        float dpWidth  = outMetrics.widthPixels / density;
+        return dpWidth >= TABLET_DP;
     }
 }

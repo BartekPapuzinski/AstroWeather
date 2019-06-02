@@ -100,7 +100,7 @@ public class Sun extends Fragment {
         new Thread(new Runnable() {
 
             public void run() {
-                int upiterator=Config.updateiterator;
+                int upiterator=Config.updateiterator+1;
                 while (loop) {
                     if(Config.updateiterator<upiterator) {
                         upiterator=1;
