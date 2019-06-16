@@ -20,8 +20,14 @@ public class SlidePagerAdapter extends FragmentPagerAdapter {
              */
             if (position == 0)
                 return new Sun();
-            else
+            else if(position==1)
                 return new Moon();
+            else if(position==2)
+                return new CityInfo();
+            else if(position==3)
+                return new CityWind();
+            else
+                return new CityForecast();
         }
 
         @Override

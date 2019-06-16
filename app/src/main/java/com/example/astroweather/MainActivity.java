@@ -18,7 +18,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // For this example, only two pages
-    static final int NUM_ITEMS = 2;
+    static final int NUM_ITEMS = 5;
     private static final int TABLET_DP = 600;
 
     boolean loop=true;
