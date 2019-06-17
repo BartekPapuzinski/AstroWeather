@@ -2,6 +2,8 @@ package com.example.astroweather;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -40,6 +42,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
         else {
+            new JsonParser().execute("xd");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(Config.name==null){
+                load();
+            }
+            else{
+                save();
+            }
             mPager = (ViewPager) findViewById(R.id.ViewPager);
             mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager());
             mPager.setAdapter(mPagerAdapter);
@@ -171,5 +185,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         float density  = context.getResources().getDisplayMetrics().density;
         float dpWidth  = outMetrics.widthPixels / density;
         return dpWidth >= TABLET_DP;
+    }
+
+    public void save(){
+        SharedPreferences myPreferences
+                = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        SharedPreferences.Editor myEditor = myPreferences.edit();
+
+        myEditor.putString("name",Config.name);
+        myEditor.putString("lat",Config.lat);
+        myEditor.putString("lon",Config.lon);
+        myEditor.putString("temp",Config.temp);
+        myEditor.putString("pressure",Config.pressure);
+        myEditor.putString("description",Config.description);
+
+        myEditor.putString("speed",Config.speed);
+        myEditor.putString("kierunek",Config.kierunek);
+        myEditor.putString("humidity",Config.humidity);
+        myEditor.putString("visibility",Config.visibility);
+        myEditor.commit();
+    }
+    public void load(){
+        SharedPreferences myPreferences
+                = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        Config.name=myPreferences.getString("name"," ");
+        Config.lat=myPreferences.getString("lat"," ");
+        Config.lon=myPreferences.getString("lon"," ");
+        Config.temp=myPreferences.getString("temp"," ");
+        Config.pressure=myPreferences.getString("pressure"," ");
+        Config.description=myPreferences.getString("description"," ");
+
+        Config.speed=myPreferences.getString("speed"," ");
+        Config.kierunek=myPreferences.getString("kierunek"," ");
+        Config.humidity=myPreferences.getString("humidity"," ");
+        Config.visibility=myPreferences.getString("visibility"," ");
+
     }
 }
