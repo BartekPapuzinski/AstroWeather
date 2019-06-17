@@ -24,7 +24,7 @@ public class JsonParser extends AsyncTask {
                 + units;
         String url2="https://api.openweathermap.org/data/2.5/forecast?q="+miasto+appkey+units;
         try {
-            System.out.println(url2);
+            System.out.println(url);
             obj = readJsonFromUrl(url);
             if(obj.getString("cod").equals("404")){
 
@@ -32,13 +32,15 @@ public class JsonParser extends AsyncTask {
             else {
                 Config.lon = obj.getJSONObject("coord").getString("lon");
                 Config.lat = obj.getJSONObject("coord").getString("lat");
-                Config.temp = obj.getJSONObject("main").getString("temp");
-                Config.pressure = obj.getJSONObject("main").getString("pressure");
+                Config.temp = obj.getJSONObject("main").getString("temp")+Config.jednostki;
+                Config.pressure = obj.getJSONObject("main").getString("pressure") +" hPa";
                 Config.name = obj.getString("name");
-                Config.speed = obj.getJSONObject("wind").getString("speed") + "km/h";
+                Config.speed = obj.getJSONObject("wind").getString("speed") + " m/s";
+                try{
                 Config.kierunek = obj.getJSONObject("wind").getString("deg");
-                Config.humidity = obj.getJSONObject("main").getString("humidity");
-                Config.visibility = obj.getString("visibility");
+                }catch (Exception e){}
+                Config.humidity = obj.getJSONObject("main").getString("humidity")+ " %";
+                Config.visibility =String.valueOf(Double.parseDouble(obj.getString("visibility"))/100)+" %";
 
 
                 JSONArray arr = obj.getJSONArray("weather");
@@ -65,16 +67,16 @@ public class JsonParser extends AsyncTask {
                     }
                 }
                 Config.jutro = arr.getJSONObject(index).getString("dt_txt").split(" ")[0];
-                Config.tempday1 = arr.getJSONObject(index).getJSONObject("main").getString("temp");
-                Config.pressureday1 = arr.getJSONObject(index).getJSONObject("main").getString("pressure");
+                Config.tempday1 = arr.getJSONObject(index).getJSONObject("main").getString("temp")+Config.jednostki;
+                Config.pressureday1 = arr.getJSONObject(index).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
 
                 Config.pojutro = arr.getJSONObject(index + 8).getString("dt_txt").split(" ")[0];
-                Config.tempday2 = arr.getJSONObject(index + 8).getJSONObject("main").getString("temp");
-                Config.pressureday2 = arr.getJSONObject(index).getJSONObject("main").getString("pressure");
+                Config.tempday2 = arr.getJSONObject(index + 8).getJSONObject("main").getString("temp")+Config.jednostki;
+                Config.pressureday2 = arr.getJSONObject(index).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
 
                 Config.popojutro = arr.getJSONObject(index + 16).getString("dt_txt").split(" ")[0];
-                Config.tempday3 = arr.getJSONObject(index + 16).getJSONObject("main").getString("temp");
-                Config.pressureday3 = arr.getJSONObject(index).getJSONObject("main").getString("pressure");
+                Config.tempday3 = arr.getJSONObject(index + 16).getJSONObject("main").getString("temp")+Config.jednostki;
+                Config.pressureday3 = arr.getJSONObject(index).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
 
             }
         } catch (IOException e) {

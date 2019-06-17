@@ -9,6 +9,7 @@ public class Config {
     public static int updateiterator=15;
     public static String miasto="Lodz";
     public static  String units ="&units=metric";// imperial dla F, metric dla C
+    public static String jednostki=" C";
     //weatherPart
 
     //f1
