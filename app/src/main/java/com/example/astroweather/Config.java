@@ -1,7 +1,6 @@
 package com.example.astroweather;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
 
 public class Config {
 
@@ -19,6 +18,7 @@ public class Config {
     public static String temp;
     public static String pressure;
     public static String description;
+    public static  String image;
 
     //f2
     public static String speed;
@@ -26,5 +26,14 @@ public class Config {
     public static String humidity;
     public static String visibility;
 
-
+    //f3
+    public static  String jutro;
+    public static  String tempday1;
+    public static  String pressureday1;
+    public static  String pojutro;
+    public static  String tempday2;
+    public static  String pressureday2;
+    public static  String popojutro;
+    public static  String tempday3;
+    public static  String pressureday3;
 }

@@ -3,6 +3,8 @@ package com.example.astroweather;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -42,13 +44,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
         else {
-            new JsonParser().execute("xd");
+            new JsonParser().execute("");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(Config.name==null){
+            if(!connect()){
+                Toast.makeText(getApplicationContext(),"Brak Internetu Dane nieaktualne",Toast.LENGTH_SHORT).show();
                 load();
             }
             else{
@@ -83,7 +86,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (item.getItemId()) {
             case R.id.settings:
                 setUpCustomDialog();
-
+                return true;
+            case R.id.miasto:
+                setUpCustomDialog2();
                 return true;
 
         }
@@ -121,6 +126,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         dialog.show();
     }
 
+    public void setUpCustomDialog2() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog2);
+
+        final EditText miasto = dialog.findViewById(R.id.miasto);
+        Button enter = dialog.findViewById(R.id.enter);
+        Spinner spiner = dialog.findViewById(R.id.spinner);
+
+        enter.setOnClickListener(new View.OnClickListener() {
+
+             @Override public void onClick(View v) {
+
+                Config.miasto=miasto.getText().toString();
+                new JsonParser().execute("");
+                dialog.dismiss();
+
+             }
+         });
+
+
+
+
+        dialog.show();
+    }
     public void clock() {
         new Thread(new Runnable() {
 
@@ -198,11 +229,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         myEditor.putString("temp",Config.temp);
         myEditor.putString("pressure",Config.pressure);
         myEditor.putString("description",Config.description);
+        myEditor.putString("image",Config.image);
 
         myEditor.putString("speed",Config.speed);
         myEditor.putString("kierunek",Config.kierunek);
         myEditor.putString("humidity",Config.humidity);
         myEditor.putString("visibility",Config.visibility);
+
+
+        myEditor.putString("jutro",Config.jutro);
+        myEditor.putString("tempday1",Config.tempday1);
+        myEditor.putString("pressureday1",Config.pressureday1);
+
+        myEditor.putString("pojutro",Config.pojutro);
+        myEditor.putString("tempday2",Config.tempday2);
+        myEditor.putString("pressureday2",Config.pressureday2);
+
+        myEditor.putString("popojutro",Config.popojutro);
+        myEditor.putString("tempday3",Config.tempday3);
+        myEditor.putString("pressureday3",Config.pressureday3);
         myEditor.commit();
     }
     public void load(){
@@ -214,11 +259,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Config.temp=myPreferences.getString("temp"," ");
         Config.pressure=myPreferences.getString("pressure"," ");
         Config.description=myPreferences.getString("description"," ");
+        Config.image=myPreferences.getString("image"," ");
 
         Config.speed=myPreferences.getString("speed"," ");
         Config.kierunek=myPreferences.getString("kierunek"," ");
         Config.humidity=myPreferences.getString("humidity"," ");
         Config.visibility=myPreferences.getString("visibility"," ");
+
+        Config.jutro=myPreferences.getString("jutro"," ");
+        Config.tempday1=myPreferences.getString("tempday1"," ");
+        Config.pressureday1=myPreferences.getString("pressureday1"," ");
+
+        Config.pojutro=myPreferences.getString("pojutro"," ");
+        Config.tempday2=myPreferences.getString("tempday2"," ");
+        Config.pressureday2=myPreferences.getString("pressureday2"," ");
+
+        Config.popojutro=myPreferences.getString("jutro"," ");
+        Config.tempday3=myPreferences.getString("tempday3"," ");
+        Config.pressureday3=myPreferences.getString("pressureday3"," ");
+    }
+
+    public boolean connect(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+           connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        else {
+            return false;
+        }
 
     }
 }

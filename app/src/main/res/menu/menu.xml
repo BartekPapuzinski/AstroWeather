@@ -6,5 +6,11 @@
           android:title="Ustawienia"
           app:showAsAction="ifRoom"
           />
+    <item
+            android:id="@+id/miasto"
+            android:icon="@drawable/a01d"
+            android:title="Miasto"
+            app:showAsAction="ifRoom"
+    />
 
 </menu>

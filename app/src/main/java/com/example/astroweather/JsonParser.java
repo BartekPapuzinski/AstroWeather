@@ -2,12 +2,15 @@ package com.example.astroweather;
 
 
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 import org.json.*;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class JsonParser extends AsyncTask {
 
@@ -16,34 +19,69 @@ public class JsonParser extends AsyncTask {
         JSONObject obj = null;
         String miasto=Config.miasto;
         String units=Config.units;
-        String url="https://api.openweathermap.org/data/2.5/weather?q="+miasto +"&appid=6cbb4d139a4ccc8e697a07432728584c"
+        String appkey="&appid=6cbb4d139a4ccc8e697a07432728584c";
+        String url="https://api.openweathermap.org/data/2.5/weather?q="+miasto +appkey
                 + units;
+        String url2="https://api.openweathermap.org/data/2.5/forecast?q="+miasto+appkey+units;
         try {
-            System.out.println(url);
+            System.out.println(url2);
             obj = readJsonFromUrl(url);
+            if(obj.getString("cod").equals("404")){
 
-        Config.lon= obj.getJSONObject("coord").getString("lon");
-        Config.lat=obj.getJSONObject("coord").getString("lat");
-        Config.temp=obj.getJSONObject("main").getString("temp");
-        Config.pressure=obj.getJSONObject("main").getString("pressure");
-        Config.name=obj.getString("name");
-        Config.speed=obj.getJSONObject("wind").getString("speed")+"km/h";
-        Config.kierunek=obj.getJSONObject("wind").getString("deg");
-        Config.humidity=obj.getJSONObject("main").getString("humidity");
-        Config.visibility=obj.getString("visibility");
+            }
+            else {
+                Config.lon = obj.getJSONObject("coord").getString("lon");
+                Config.lat = obj.getJSONObject("coord").getString("lat");
+                Config.temp = obj.getJSONObject("main").getString("temp");
+                Config.pressure = obj.getJSONObject("main").getString("pressure");
+                Config.name = obj.getString("name");
+                Config.speed = obj.getJSONObject("wind").getString("speed") + "km/h";
+                Config.kierunek = obj.getJSONObject("wind").getString("deg");
+                Config.humidity = obj.getJSONObject("main").getString("humidity");
+                Config.visibility = obj.getString("visibility");
 
 
-        JSONArray arr = obj.getJSONArray("weather");
-        Config.description=arr.getJSONObject(0).getString("description");
+                JSONArray arr = obj.getJSONArray("weather");
+                Config.description = arr.getJSONObject(0).getString("description");
+                Config.image= arr.getJSONObject(0).getString("icon");
 
-        System.out.println(obj.getJSONObject("coord").getString("lon"));
+                System.out.println(obj.getJSONObject("coord").getString("lon"));
+                obj = readJsonFromUrl(url2);
+                arr = obj.getJSONArray("list");
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                String currentdate = simpleDateFormat.format(date);
+                int index = 0;
+                for (int i = 0; i < arr.length(); i++) {
+                    if (arr.getJSONObject(i).getString("dt_txt").split(" ")[1].equals("12:00:00")) {
+                        if (arr.getJSONObject(i).getString("dt_txt").split(" ")[0].equals(currentdate)) {
+                            index = i + 8;
+                            break;
+                        } else {
+                            index = i;
+                            break;
+                        }
 
+                    }
+                }
+                Config.jutro = arr.getJSONObject(index).getString("dt_txt").split(" ")[0];
+                Config.tempday1 = arr.getJSONObject(index).getJSONObject("main").getString("temp");
+                Config.pressureday1 = arr.getJSONObject(index).getJSONObject("main").getString("pressure");
+
+                Config.pojutro = arr.getJSONObject(index + 8).getString("dt_txt").split(" ")[0];
+                Config.tempday2 = arr.getJSONObject(index + 8).getJSONObject("main").getString("temp");
+                Config.pressureday2 = arr.getJSONObject(index).getJSONObject("main").getString("pressure");
+
+                Config.popojutro = arr.getJSONObject(index + 16).getString("dt_txt").split(" ")[0];
+                Config.tempday3 = arr.getJSONObject(index + 16).getJSONObject("main").getString("temp");
+                Config.pressureday3 = arr.getJSONObject(index).getJSONObject("main").getString("pressure");
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //return null;
         return null;
     }
     private static String readAll(Reader rd) throws IOException {
