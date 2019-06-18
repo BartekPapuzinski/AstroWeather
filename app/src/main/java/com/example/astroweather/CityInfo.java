@@ -25,7 +25,6 @@ public class CityInfo extends Fragment {
     TextView temperatura;
     TextView cisnienie;
     TextView opis;
-    ImageView image;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class CityInfo extends Fragment {
         temperatura=view.findViewById(R.id.temperatura);
         cisnienie=view.findViewById(R.id.cisnienie);
         opis=view.findViewById(R.id.opis);
-        image= view.findViewById(R.id.image);
+
 
     }
 

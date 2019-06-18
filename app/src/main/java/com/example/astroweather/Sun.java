@@ -108,7 +108,7 @@ public class Sun extends Fragment {
 
                             @Override public void run() {
                                 update();
-                                Toast.makeText(getContext(),"ref",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(),"ref",Toast.LENGTH_SHORT).show();
 
                             }
                         });

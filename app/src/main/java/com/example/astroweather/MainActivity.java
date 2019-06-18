@@ -32,12 +32,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadalways();
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         timer = findViewById(R.id.timer);
-        Config.miasta.add("lodz");
+
         /* Instantiate a ViewPager and a PagerAdapter. */
 
             new JsonParser().execute("");
@@ -135,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,Config.miasta);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiner.setAdapter(adapter);
+        if(!connect()){
+            spiner.setEnabled(false);
+        }
         spiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -160,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                  else {
                      Config.numberofCitys++;
                      Config.miasta.add(temp);
+                     Config.index=Config.numberofCitys;
                  }
                 if(switch1.isChecked()){
                     Config.units="&units=imperial";
@@ -261,7 +266,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         SharedPreferences.Editor myEditor = myPreferences.edit();
 
         for(int i=0;i<=Config.numberofCitys;i++){
-            myEditor.putString("miasto"+i,Config.miasta.get(i));
+            myEditor.putString(("miasto"+i),Config.miasta.get(i));
+            System.out.println(i+"= "+Config.miasta.get(i));
         }
         myEditor.putString("numberofCitys",String.valueOf(Config.numberofCitys));
         myEditor.putString("name",Config.name);
@@ -294,12 +300,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void load(){
         SharedPreferences myPreferences
                 = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-
-        Config.numberofCitys=Integer.valueOf(myPreferences.getString("numberofCitys","0"));
-        for(int i=0;i<Config.numberofCitys;i++){
-            Config.miasta.add(myPreferences.getString("miasto"+i," "));
-        }
-
         Config.name=myPreferences.getString("name"," ");
         Config.lat=myPreferences.getString("lat"," ");
         Config.lon=myPreferences.getString("lon"," ");
@@ -324,6 +324,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Config.popojutro=myPreferences.getString("jutro"," ");
         Config.tempday3=myPreferences.getString("tempday3"," ");
         Config.pressureday3=myPreferences.getString("pressureday3"," ");
+    }
+    public void loadalways(){
+        SharedPreferences myPreferences
+                = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+        Config.numberofCitys=Integer.valueOf(myPreferences.getString("numberofCitys","0"));
+        for(int i=0;i<=Config.numberofCitys;i++){
+            Config.miasta.add(i,myPreferences.getString(("miasto"+i),"lodz"));
+
+        }
     }
 
     public boolean connect(){
