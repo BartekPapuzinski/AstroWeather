@@ -153,14 +153,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         enter.setOnClickListener(new View.OnClickListener() {
 
              @Override public void onClick(View v) {
+                 String temp=miasto.getText().toString();
+                 if(temp.equals("")){
 
-                Config.numberofCitys++;
-                Config.miasta.add(miasto.getText().toString());
-
+                 }
+                 else {
+                     Config.numberofCitys++;
+                     Config.miasta.add(temp);
+                 }
                 if(switch1.isChecked()){
                     Config.units="&units=imperial";
                     Config.jednostki=" F";
                     Config.jednostki2=" miles/h";
+
                 }
                 else{
                     Config.units="&units=metric";
