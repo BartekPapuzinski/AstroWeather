@@ -37,13 +37,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         timer = findViewById(R.id.timer);
+        Config.miasta.add("lodz");
         /* Instantiate a ViewPager and a PagerAdapter. */
 
-        if(isTablet(this))
-        {
-
-        }
-        else {
             new JsonParser().execute("");
             try {
                 Thread.sleep(1000);
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager());
             mPager.setAdapter(mPagerAdapter);
             clock();
-        }
+
     }
     @Override
     public void onStop() {
@@ -135,13 +131,49 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         final EditText miasto = dialog.findViewById(R.id.miasto);
         Button enter = dialog.findViewById(R.id.enter);
         Spinner spiner = dialog.findViewById(R.id.spinner);
+        final Switch switch1 = dialog.findViewById(R.id.switch1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,Config.miasta);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiner.setAdapter(adapter);
+        spiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                    int id, long position) {
+                Config.index= (int)position;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+
+            }
+        });
         enter.setOnClickListener(new View.OnClickListener() {
 
              @Override public void onClick(View v) {
 
-                Config.miasto=miasto.getText().toString();
+                Config.numberofCitys++;
+                Config.miasta.add(miasto.getText().toString());
+
+                if(switch1.isChecked()){
+                    Config.units="&units=imperial";
+                    Config.jednostki=" F";
+                    Config.jednostki2=" miles/h";
+                }
+                else{
+                    Config.units="&units=metric";
+                    Config.jednostki=" C";
+                    Config.jednostki2=" m/s";
+                }
                 new JsonParser().execute("");
+                 try {
+                     Thread.sleep(1000);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+                save();
                 dialog.dismiss();
 
              }
@@ -223,6 +255,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         SharedPreferences.Editor myEditor = myPreferences.edit();
 
+        for(int i=0;i<=Config.numberofCitys;i++){
+            myEditor.putString("miasto"+i,Config.miasta.get(i));
+        }
+        myEditor.putString("numberofCitys",String.valueOf(Config.numberofCitys));
         myEditor.putString("name",Config.name);
         myEditor.putString("lat",Config.lat);
         myEditor.putString("lon",Config.lon);
@@ -253,6 +289,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void load(){
         SharedPreferences myPreferences
                 = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+        Config.numberofCitys=Integer.valueOf(myPreferences.getString("numberofCitys","0"));
+        for(int i=0;i<Config.numberofCitys;i++){
+            Config.miasta.add(myPreferences.getString("miasto"+i," "));
+        }
+
         Config.name=myPreferences.getString("name"," ");
         Config.lat=myPreferences.getString("lat"," ");
         Config.lon=myPreferences.getString("lon"," ");

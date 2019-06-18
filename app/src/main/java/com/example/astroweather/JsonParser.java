@@ -17,7 +17,7 @@ public class JsonParser extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects){
         JSONObject obj = null;
-        String miasto=Config.miasto;
+        String miasto=Config.miasta.get(Config.index);
         String units=Config.units;
         String appkey="&appid=6cbb4d139a4ccc8e697a07432728584c";
         String url="https://api.openweathermap.org/data/2.5/weather?q="+miasto +appkey
@@ -35,7 +35,7 @@ public class JsonParser extends AsyncTask {
                 Config.temp = obj.getJSONObject("main").getString("temp")+Config.jednostki;
                 Config.pressure = obj.getJSONObject("main").getString("pressure") +" hPa";
                 Config.name = obj.getString("name");
-                Config.speed = obj.getJSONObject("wind").getString("speed") + " m/s";
+                Config.speed = obj.getJSONObject("wind").getString("speed") + Config.jednostki2;
                 try{
                 Config.kierunek = obj.getJSONObject("wind").getString("deg");
                 }catch (Exception e){}
@@ -72,11 +72,11 @@ public class JsonParser extends AsyncTask {
 
                 Config.pojutro = arr.getJSONObject(index + 8).getString("dt_txt").split(" ")[0];
                 Config.tempday2 = arr.getJSONObject(index + 8).getJSONObject("main").getString("temp")+Config.jednostki;
-                Config.pressureday2 = arr.getJSONObject(index).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
+                Config.pressureday2 = arr.getJSONObject(index+8).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
 
                 Config.popojutro = arr.getJSONObject(index + 16).getString("dt_txt").split(" ")[0];
                 Config.tempday3 = arr.getJSONObject(index + 16).getJSONObject("main").getString("temp")+Config.jednostki;
-                Config.pressureday3 = arr.getJSONObject(index).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
+                Config.pressureday3 = arr.getJSONObject(index+16).getJSONObject("main").getString("pressure").substring(0,4)+"hPa";
 
             }
         } catch (IOException e) {

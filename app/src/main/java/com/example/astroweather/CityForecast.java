@@ -29,6 +29,11 @@ public class CityForecast extends Fragment {
         go();
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        go();
+    }
 
     public void init() {
         nazwa=view.findViewById(R.id.nazwa);

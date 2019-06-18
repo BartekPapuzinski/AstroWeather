@@ -1,15 +1,19 @@
 package com.example.astroweather;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
 
     public static double latitude = 51.75;
     public static double longitude = 19.49;
     public static int updateiterator=15;
-    public static String miasto="Lodz";
+    public static List<String> miasta = new ArrayList<>();
+    public static int index=0;
+    public static int numberofCitys=0;
     public static  String units ="&units=metric";// imperial dla F, metric dla C
     public static String jednostki=" C";
+    public static String jednostki2=" m/s";
     //weatherPart
 
     //f1

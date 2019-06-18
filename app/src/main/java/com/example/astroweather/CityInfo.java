@@ -36,6 +36,11 @@ public class CityInfo extends Fragment {
         go();
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        go();
+    }
 
     public void init(){
 

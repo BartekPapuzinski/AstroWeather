@@ -24,6 +24,11 @@ public class CityWind extends Fragment {
         go();
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        go();
+    }
 
     public void init(){
         sila=view.findViewById(R.id.sila);
